@@ -27,7 +27,6 @@ const Search = () => {
     const res = await axios.get("/search.json", {
       params: { q: query },
     });
-    console.log(res.data);
     return res.data as LocationsProps[] | [] | null;
   };
 

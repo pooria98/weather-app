@@ -18,7 +18,6 @@ const WeatherPage = () => {
     const res = await axios.get("/forecast.json", {
       params: { q: `id:${id}`, days: 3 },
     });
-    console.log(res);
     return res.data;
   };
 

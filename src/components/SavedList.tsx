@@ -12,7 +12,6 @@ const SavedList = () => {
     const res = await axios.get("/current.json", {
       params: { q: `id:${id}` },
     });
-    console.log(res);
     return res;
   };
 
