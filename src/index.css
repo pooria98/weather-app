@@ -9,12 +9,3 @@
 input[type="search"]::-webkit-search-cancel-button {
   cursor: pointer;
 }
-
-.home-bg {
-  background: linear-gradient(
-      to top,
-      --alpha(var(--color-sky-700) / 40%),
-      --alpha(var(--color-indigo-950) / 40%)
-    ),
-    url("/src/images/bg.jpg");
-}

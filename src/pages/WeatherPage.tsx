@@ -8,6 +8,8 @@ import SaveButton from "../components/SaveButton";
 import type { ErrorProps } from "../types/types";
 import CurrentWeather from "../components/CurrentWeather";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import dayBg from "../images/day.jpg";
+import nightBg from "../images/night.jpg";
 
 const WeatherPage = () => {
   const { id } = useParams();
@@ -60,9 +62,8 @@ const WeatherPage = () => {
 
   return (
     <div
-      className={`w-full h-full py-4 px-2 flex flex-col justify-between overflow-y-auto text-shadow-xs text-white bg-cover ${
-        data?.current?.is_day ? "bg-[url(./images/day.jpg)]" : "bg-[url(./images/night.jpg)]"
-      }`}
+      className="w-full h-full py-4 px-2 flex flex-col justify-between overflow-y-auto text-shadow-xs text-white bg-cover"
+      style={{ backgroundImage: `url(${data?.current?.is_day ? dayBg : nightBg})` }}
     >
       {/* top bar - back and save */}
       <div className="max-w-xl w-full mx-auto relative flex justify-between items-center mb-8">
