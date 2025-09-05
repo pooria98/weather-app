@@ -13,8 +13,8 @@ input[type="search"]::-webkit-search-cancel-button {
 .home-bg {
   background: linear-gradient(
       to top,
-      --alpha(var(--color-indigo-950) / 30%),
-      --alpha(var(--color-sky-700) / 30%)
+      --alpha(var(--color-sky-700) / 40%),
+      --alpha(var(--color-indigo-950) / 40%)
     ),
-    url("/bg.jpg");
+    url("/src/images/bg.jpg");
 }

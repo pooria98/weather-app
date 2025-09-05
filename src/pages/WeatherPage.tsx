@@ -61,7 +61,7 @@ const WeatherPage = () => {
   return (
     <div
       className={`w-full h-full py-4 px-2 flex flex-col justify-between overflow-y-auto text-shadow-xs text-white bg-cover ${
-        data?.current?.is_day ? "bg-[url(/day.jpg)]" : "bg-[url(/night.jpg)]"
+        data?.current?.is_day ? "bg-[url(./images/day.jpg)]" : "bg-[url(./images/night.jpg)]"
       }`}
     >
       {/* top bar - back and save */}
