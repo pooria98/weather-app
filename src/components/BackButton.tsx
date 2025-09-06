@@ -7,7 +7,7 @@ const BackButton = () => {
   return (
     <button
       className="flex items-center cursor-pointer p-1 text-shadow-xs"
-      onClick={() => navigate(-1)}
+      onClick={() => navigate("/")}
     >
       <Icon icon="material-symbols:chevron-left-rounded" width="24" height="24" />
       <p>Back</p>
