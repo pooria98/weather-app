@@ -9,7 +9,7 @@ import type { ErrorProps } from "../types/types";
 import CurrentWeather from "../components/CurrentWeather";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import dayBg from "../images/day.jpg";
-import nightBg from "../images/night.jpg";
+import nightBg from "../images/night.webp";
 import { motion } from "motion/react";
 
 const WeatherPage = () => {
