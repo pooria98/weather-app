@@ -10,6 +10,7 @@ import CurrentWeather from "../components/CurrentWeather";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import dayBg from "../images/day.jpg";
 import nightBg from "../images/night.jpg";
+import { motion } from "motion/react";
 
 const WeatherPage = () => {
   const { id } = useParams();
@@ -65,13 +66,17 @@ const WeatherPage = () => {
       style={{ backgroundImage: `url(${data?.current?.is_day ? dayBg : nightBg})` }}
     >
       {/* top bar - back and save */}
-      <div className="max-w-xl w-full mx-auto relative flex justify-between items-center mb-8">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="max-w-xl w-full mx-auto relative flex justify-between items-center mb-8"
+      >
         <BackButton />
         <h1 className="absolute top-1/2 left-1/2 -translate-1/2 text-2xl font-semibold">
           {data?.location?.name}
         </h1>
         <SaveButton />
-      </div>
+      </motion.div>
 
       {/* middle part - info */}
       {data && <CurrentWeather data={data} />}

@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useQueries } from "@tanstack/react-query";
 import axios from "../axiosConfig";
+import { motion } from "motion/react";
 
 const SavedList = () => {
   const [saved, setSaved] = useAtom(locations);
@@ -23,6 +24,41 @@ const SavedList = () => {
     })),
   });
 
+  const containerVariants = {
+    visible: {
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: {
+      opacity: 0,
+      x: -30,
+      scale: 0.95,
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
+
+  results.forEach((result) => {
+    if (result.isLoading) {
+      return (
+        <div className="flex flex-col justify-center items-center py-20 text-center">
+          <Icon icon="eos-icons:bubble-loading" width="32" height="32" />
+        </div>
+      );
+    }
+  });
+
   if (saved.length === 0)
     return (
       <div className="flex flex-col justify-center items-center py-20 text-center">
@@ -35,14 +71,24 @@ const SavedList = () => {
     );
 
   return (
-    <ul className="flex flex-col gap-8">
+    <motion.ul
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="flex flex-col gap-8"
+    >
       {results?.map((item) => (
-        <li key={item?.data?.config?.params?.q.slice(3)} className="w-full relative">
+        <motion.li
+          variants={itemVariants}
+          whileHover={{ scale: 1.01 }}
+          key={item?.data?.config?.params?.q.slice(3)}
+          className="w-full relative"
+        >
           <Icon
             icon="material-symbols:close-rounded"
             width="24"
             height="24"
-            className="absolute z-50 top-2 right-2 cursor-pointer hover:text-red-500 hover:scale-[1.2] transition-all"
+            className="absolute z-10 top-2 right-2 cursor-pointer hover:text-red-500 hover:scale-[1.2] transition-all"
             onClick={() =>
               setSaved((prev) =>
                 prev.filter((loc) => loc !== item?.data?.config?.params?.q.slice(3))
@@ -69,9 +115,9 @@ const SavedList = () => {
               <p className="text-xs text-center">{item?.data?.data?.current.condition.text}</p>
             </div>
           </Link>
-        </li>
+        </motion.li>
       ))}
-    </ul>
+    </motion.ul>
   );
 };
 

@@ -4,6 +4,7 @@ import axios from "../axiosConfig";
 import { useClickAway, useDebounce } from "@uidotdev/usehooks";
 import { Link } from "react-router";
 import { useQuery } from "@tanstack/react-query";
+import { motion } from "motion/react";
 
 interface LocationsProps {
   country: string;
@@ -38,7 +39,7 @@ const Search = () => {
   });
 
   return (
-    <div ref={ref} className="mb-12 relative">
+    <motion.div initial={{ y: -100 }} animate={{ y: 0 }} ref={ref} className="mb-12 relative z-20">
       {/* search bar */}
       <div className="flex items-center gap-2 mb-2 p-2 bg-white/20 backdrop-blur-sm shadow rounded-full">
         <Icon icon="material-symbols:search-rounded" width="24" height="24" />
@@ -74,7 +75,7 @@ const Search = () => {
           {error && <p className="font-light text-neutral-200 text-center">{error.message}</p>}
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 
