@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import axios from "../axiosConfig";
 import { useClickAway, useDebounce } from "@uidotdev/usehooks";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "motion/react";
 
@@ -20,6 +20,9 @@ const Search = () => {
   const [search, setSearch] = useState("");
   const debounced = useDebounce(search, 1000);
   const [focused, setFocused] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const navigate = useNavigate();
+
   const ref = useClickAway<HTMLDivElement>(() => {
     setFocused(false);
   });
@@ -38,6 +41,40 @@ const Search = () => {
     staleTime: 5 * 60 * 1000,
   });
 
+  useEffect(() => {
+    setSelectedIndex(-1);
+  }, [data, focused]);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!data || data.length === 0) return;
+
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault();
+        setSelectedIndex((prev) => (prev < data.length - 1 ? prev + 1 : prev));
+        break;
+
+      case "ArrowUp":
+        e.preventDefault();
+        setSelectedIndex((prev) => (prev > 0 ? prev - 1 : -1));
+        break;
+
+      case "Enter":
+        e.preventDefault();
+        if (selectedIndex >= 0 && selectedIndex < data.length) {
+          const selectedLocation = data[selectedIndex];
+          navigate(`/location/${selectedLocation.id}`);
+          setFocused(false);
+        }
+        break;
+
+      case "Escape":
+        setFocused(false);
+        setSelectedIndex(-1);
+        break;
+    }
+  };
+
   return (
     <motion.div initial={{ y: -100 }} animate={{ y: 0 }} ref={ref} className="mb-12 relative z-20">
       {/* search bar */}
@@ -49,6 +86,7 @@ const Search = () => {
           placeholder="Search for a location..."
           onChange={(e) => setSearch(e.currentTarget.value)}
           onFocus={() => setFocused(true)}
+          onKeyDown={handleKeyDown}
         />
       </div>
       {/* search results */}
@@ -57,8 +95,11 @@ const Search = () => {
           {data ? (
             data.length > 0 ? (
               <ul>
-                {data.map((location) => (
-                  <li key={location.id} className={data.length > 1 ? "mb-4" : ""}>
+                {data.map((location, index) => (
+                  <li
+                    key={location.id}
+                    className={`p-2 ${selectedIndex === index ? "bg-white/30 rounded-sm" : ""}`}
+                  >
                     <Link to={`/location/${location.id}`} className="w-full inline-block">
                       <span className="font-semibold mr-2">{location.name}</span>
                       <span className="text-neutral-200">
