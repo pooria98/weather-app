@@ -49,16 +49,6 @@ const SavedList = () => {
     },
   };
 
-  results.forEach((result) => {
-    if (result.isLoading) {
-      return (
-        <div className="flex flex-col justify-center items-center py-20 text-center">
-          <Icon icon="eos-icons:bubble-loading" width="32" height="32" />
-        </div>
-      );
-    }
-  });
-
   if (saved.length === 0)
     return (
       <div className="flex flex-col justify-center items-center py-20 text-center">
@@ -95,26 +85,32 @@ const SavedList = () => {
               )
             }
           />
-          <Link
-            to={`/location/${item?.data?.config?.params?.q.slice(3)}`}
-            className="flex justify-between items-center w-full py-4 px-8 rounded-xl shadow-lg backdrop-blur-sm bg-gradient-to-tr from-gray-950/70 to-slate-600/50"
-          >
-            <div>
-              <div className="relative w-fit mx-auto mb-2">
-                <p className="text-4xl">{item?.data?.data?.current.temp_c.toFixed()}</p>
-                <span className="absolute top-0 -right-4 text-xs">°C</span>
+          {item.isLoading ? (
+            <h1 className="font-semibold text-2xl">LOADING...</h1>
+          ) : (
+            <Link
+              to={`/location/${item?.data?.config?.params?.q.slice(3)}`}
+              className="flex justify-between items-center w-full py-4 px-8 rounded-xl shadow-lg backdrop-blur-sm bg-gradient-to-tr from-gray-950/70 to-slate-600/50"
+            >
+              <div>
+                <div className="relative w-fit mx-auto mb-2">
+                  <p className="text-4xl">{item?.data?.data?.current.temp_c.toFixed()}</p>
+                  <span className="absolute top-0 -right-4 text-xs">°C</span>
+                </div>
+                <p className="text-xl font-semibold text-center">
+                  {item?.data?.data?.location.name}
+                </p>
               </div>
-              <p className="text-xl font-semibold text-center">{item?.data?.data?.location.name}</p>
-            </div>
-            <div>
-              <img
-                src={item?.data?.data?.current.condition.icon.slice(0)}
-                alt="icon"
-                className="mx-auto"
-              />
-              <p className="text-xs text-center">{item?.data?.data?.current.condition.text}</p>
-            </div>
-          </Link>
+              <div>
+                <img
+                  src={item?.data?.data?.current.condition.icon.slice(0)}
+                  alt="icon"
+                  className="mx-auto"
+                />
+                <p className="text-xs text-center">{item?.data?.data?.current.condition.text}</p>
+              </div>
+            </Link>
+          )}
         </motion.li>
       ))}
     </motion.ul>

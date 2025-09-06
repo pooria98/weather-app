@@ -38,8 +38,8 @@ const WeatherPage = () => {
 
   if (isLoading) {
     return (
-      <div className="h-full flex flex-col justify-center">
-        <Icon icon="eos-icons:bubble-loading" width="16" height="16" />
+      <div className="w-full h-full flex justify-center items-center">
+        <Icon icon="eos-icons:bubble-loading" width="40" height="40" />
       </div>
     );
   }

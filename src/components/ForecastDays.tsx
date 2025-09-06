@@ -32,8 +32,9 @@ const ForecastDays = ({ data }: { data: WeatherResponse }) => {
       variants={containerVariants}
       className="flex justify-center gap-2 w-full text-center"
     >
-      {data?.forecast?.forecastday.map((item) => (
+      {data?.forecast?.forecastday.map((item, index) => (
         <motion.div
+          key={index}
           variants={itemVariants}
           className="flex-1 flex flex-col justify-center items-center max-w-40 backdrop-blur-xs shadow-xl bg-white/5 rounded-lg *:flex-1"
         >
