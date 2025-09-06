@@ -75,7 +75,7 @@ const SavedList = () => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="flex flex-col gap-8"
+      className="flex flex-col gap-8 overflow-y-scroll px-4"
     >
       {results?.map((item) => (
         <motion.li
